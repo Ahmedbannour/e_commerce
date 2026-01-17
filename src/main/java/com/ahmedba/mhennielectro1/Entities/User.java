@@ -1,9 +1,12 @@
 package com.ahmedba.mhennielectro1.Entities;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "User")
@@ -11,7 +14,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     @Column(unique = true , nullable = false , length = 255)
     private String nom;
@@ -39,8 +42,30 @@ public class User {
     private boolean active;
     private boolean verified;
 
+    public void setId(long id) {
+        this.id = id;
+    }
 
-    public int getId() {
+    public List<Commande> getCommandes() {
+        return commandes;
+    }
+
+    public void setCommandes(List<Commande> commandes) {
+        this.commandes = commandes;
+    }
+
+    @OneToMany(cascade = CascadeType.ALL , mappedBy = "user" , orphanRemoval = true)
+    @JsonManagedReference
+    private List<Commande> commandes;
+
+
+
+    @ManyToOne
+    @JoinColumn(name = "ville_id" , nullable = false)
+    @JsonBackReference
+    private Ville ville;
+
+    public long getId() {
         return id;
     }
 
