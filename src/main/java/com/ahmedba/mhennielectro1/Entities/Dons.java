@@ -21,7 +21,7 @@ public class Dons {
 
     @ManyToOne
     @JoinColumn(name = "product_id" , nullable = false)
-    @JsonBackReference
+    @JsonBackReference("product-dons")
     private Product product;
 
 

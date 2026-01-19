@@ -16,9 +16,16 @@ public class LigneCommande {
 
 
     @ManyToOne
-    @JoinColumn(name = "commande_id" , nullable = false)
-    @JsonBackReference
+    @JoinColumn(name = "commande_id", nullable = false)
+    @JsonBackReference("lignecommande-commande")
     private Commande commande;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    @JsonBackReference("commande-product")
+    private Product product;
+
+
 
     public Long getId() {
         return id;
@@ -52,10 +59,6 @@ public class LigneCommande {
         this.product = product;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "product_id" , nullable = false)
-    @JsonBackReference
-    private Product product;
 
 
     public LigneCommande(Long id, int quantite, Commande commande, Product product) {

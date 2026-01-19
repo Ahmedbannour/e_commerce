@@ -25,8 +25,8 @@ public class Garantie {
     private Date date_expiration;
 
 
-    @OneToOne(mappedBy = "garantie", fetch = FetchType.LAZY)
-    @JsonBackReference
+    @OneToOne(mappedBy = "garantie")
+    @JsonBackReference("product-garantie")
     private Product product;
 
 

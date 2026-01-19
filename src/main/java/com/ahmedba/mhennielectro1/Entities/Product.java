@@ -2,6 +2,8 @@ package com.ahmedba.mhennielectro1.Entities;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -23,23 +25,42 @@ public class Product {
     @Column(length = 255)
     private double price;
 
-    @Column(length = 255)
     private String image;
 
     @Column
     private String ref;
 
-    @Column(length = 255)
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     @Temporal(TemporalType.TIMESTAMP)
     private Date date_achat;
 
 
 
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(optional = true)
     @JoinColumn(name = "garantie_id")
-    @JsonManagedReference
+    @JsonManagedReference("product-garantie")
     private Garantie garantie;
+
+
+
+    @OneToMany(cascade = CascadeType.ALL , mappedBy = "product" , orphanRemoval = true)
+    @JsonManagedReference("depot-product")
+    private List<DepotProduct> depotProducts;
+
+
+
+    @OneToMany(cascade = CascadeType.ALL , mappedBy = "product" , orphanRemoval = true)
+    @JsonManagedReference("commande-product")
+    private List<LigneCommande> ligneCommandes;
+
+
+    @OneToMany(cascade = CascadeType.ALL , mappedBy = "product" , orphanRemoval = true)
+    @JsonIgnore
+    private List<Dons> Dons;
+
+
 
     public Garantie getGarantie() {
         return garantie;
@@ -57,20 +78,6 @@ public class Product {
         this.depotProducts = depotProducts;
     }
 
-    @OneToMany(cascade = CascadeType.ALL , mappedBy = "product" , orphanRemoval = true)
-    @JsonManagedReference
-    private List<DepotProduct> depotProducts;
-
-
-
-    @OneToMany(cascade = CascadeType.ALL , mappedBy = "product" , orphanRemoval = true)
-    @JsonManagedReference
-    private List<LigneCommande> ligneCommandes;
-
-
-    @OneToMany(cascade = CascadeType.ALL , mappedBy = "product" , orphanRemoval = true)
-    @JsonManagedReference
-    private List<Dons> Dons;
 
     public List<Dons> getDons() {
         return Dons;
@@ -137,6 +144,11 @@ public class Product {
         this.date_achat = date_achat;
     }
 
+    public Product(String description, double price, String ref) {
+        this.description = description;
+        this.price = price;
+        this.ref = ref;
+    }
 
     public Product(long id, String description, double price, String image, String ref, Date date_achat) {
         this.id = id;

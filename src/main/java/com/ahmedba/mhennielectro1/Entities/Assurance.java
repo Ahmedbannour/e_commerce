@@ -14,6 +14,38 @@ public class Assurance {
     private String label;
 
     @Column(length = 255)
-    private String matricule_fiscale;
+    private String matricule;
 
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public String getMatricule() {
+        return matricule;
+    }
+
+    public void setMatricule(String matricule) {
+        this.matricule = matricule;
+    }
+
+    public Assurance(int id, String label, String matricule) {
+        this.id = id;
+        this.label = label;
+        this.matricule = matricule;
+    }
+
+    public Assurance() {}
 }
