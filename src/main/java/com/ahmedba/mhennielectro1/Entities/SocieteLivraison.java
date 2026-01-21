@@ -1,6 +1,7 @@
 package com.ahmedba.mhennielectro1.Entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -72,14 +73,14 @@ public class SocieteLivraison {
     }
 
     @OneToMany(cascade = CascadeType.ALL , mappedBy = "societeLivraison" , orphanRemoval = true)
-    @JsonManagedReference
+    @JsonIgnore
     private List<Livreur> livreurs;
 
 
 
     @ManyToOne
     @JoinColumn(name = "ville_id" , nullable = false)
-    @JsonBackReference
+    @JsonIgnore
     private Ville ville;
 
 

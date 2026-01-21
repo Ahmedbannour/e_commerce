@@ -30,7 +30,7 @@ public class Commande {
 
     @ManyToOne
     @JoinColumn(name = "livreur_id" , nullable = false)
-    @JsonIgnore
+    @JsonBackReference("commandes-livreur")
     private Livreur livreur;
 
     @OneToMany(cascade = CascadeType.ALL , mappedBy = "commande" , orphanRemoval = true)

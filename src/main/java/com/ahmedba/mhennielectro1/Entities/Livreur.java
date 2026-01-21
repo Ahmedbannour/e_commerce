@@ -2,6 +2,7 @@ package com.ahmedba.mhennielectro1.Entities;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -17,10 +18,10 @@ public class Livreur {
     private Long id;
 
 
-    @Column(unique = true , nullable = false , length = 255)
+    @Column(nullable = false , length = 255)
     private String nom;
 
-    @Column(unique = true , nullable = false , length = 255)
+    @Column(nullable = false , length = 255)
     private String prenom;
 
     @Column(unique = true , nullable = false , length = 255)
@@ -29,7 +30,7 @@ public class Livreur {
 
     private String password;
 
-    @Column(unique = true , nullable = false , length = 255)
+    @Column(nullable = false , length = 255)
     private String phone;
 
     private int id_ville;
@@ -41,8 +42,16 @@ public class Livreur {
 
 
     @OneToMany(cascade = CascadeType.ALL , mappedBy = "livreur" , orphanRemoval = true)
-    @JsonManagedReference
+    @JsonManagedReference("commandes-livreur")
     private List<Commande> commandes;
+
+
+
+    @ManyToOne
+    @JoinColumn(name = "societe_id" , nullable = true )
+    @JsonIgnore
+    private SocieteLivraison societeLivraison;
+
 
     public SocieteLivraison getSocieteLivraison() {
         return societeLivraison;
@@ -51,11 +60,6 @@ public class Livreur {
     public void setSocieteLivraison(SocieteLivraison societeLivraison) {
         this.societeLivraison = societeLivraison;
     }
-
-    @ManyToOne
-    @JoinColumn(name = "societe_id" , nullable = false)
-    @JsonBackReference
-    private SocieteLivraison societeLivraison;
 
 
     public Long getId() {
@@ -131,5 +135,30 @@ public class Livreur {
     }
 
     public Livreur() {
+
+    }
+
+
+    public Livreur(Long id, String nom, String prenom, String email, String password, String phone, int id_ville, Date date_naissance, List<Commande> commandes, SocieteLivraison societeLivraison) {
+        this.id = id;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.email = email;
+        this.password = password;
+        this.phone = phone;
+        this.id_ville = id_ville;
+        this.date_naissance = date_naissance;
+        this.commandes = commandes;
+        this.societeLivraison = societeLivraison;
+    }
+
+
+    public Livreur(String phone, String email, String password, Date date_naissance, String nom, String prenom) {
+        this.phone = phone;
+        this.email = email;
+        this.password = password;
+        this.date_naissance = date_naissance;
+        this.nom = nom;
+        this.prenom = prenom;
     }
 }
