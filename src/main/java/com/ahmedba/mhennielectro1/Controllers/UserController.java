@@ -33,5 +33,9 @@ public class UserController {
     }
 
 
+    @GetMapping("/test")
+    public String userAccess() {
+        return "✅ USER ACCESS GRANTED";
+    }
 
 }
