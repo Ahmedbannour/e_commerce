@@ -23,7 +23,7 @@ public class Commande {
 
     @ManyToOne
     @JoinColumn(name = "user_id" , nullable = false)
-    @JsonIgnore
+    @JsonBackReference("user-commandes")
     private User user;
 
 

@@ -19,7 +19,7 @@ public class Pays {
 
 
     @OneToMany(cascade = CascadeType.ALL , mappedBy = "pays" , orphanRemoval = true)
-    @JsonManagedReference
+    @JsonManagedReference("pays-region")
     private List<Region> regions;
 
 

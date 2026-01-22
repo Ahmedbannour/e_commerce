@@ -4,6 +4,8 @@ package com.ahmedba.mhennielectro1.Entities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "Ville")
 public class Ville {
@@ -17,17 +19,24 @@ public class Ville {
     private int code_postal;
 
     @ManyToOne
-    @JoinColumn(name = "region_id" , nullable = false)
-    @JsonBackReference
+    @JoinColumn(name = "region_id")
+    @JsonBackReference("ville-region")
     private Region region;
 
 
 
 
+    @OneToMany(cascade = CascadeType.ALL , mappedBy = "ville" , orphanRemoval = true)
+    @JsonBackReference("ville-user")
+    private List<User> users;
 
+    public List<User> getUsers() {
+        return users;
+    }
 
-
-
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
 
     public Ville(long id, String label, int code_postal, Region region) {
         this.id = id;

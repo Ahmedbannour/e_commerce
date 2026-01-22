@@ -28,7 +28,7 @@ public class CommandeController {
 
     @PostMapping
     public ResponseEntity<Commande> ajouterCommande(@RequestBody Commande commande) {
-        return  new ResponseEntity<>(commandeRepository.save(commande), HttpStatus.OK);
+        return new ResponseEntity<>(commandeRepository.save(commande), HttpStatus.OK);
     }
 
 

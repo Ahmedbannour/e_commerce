@@ -32,7 +32,6 @@ public class User {
     private String phone;
 
     private int id_ville;
-    private String role;
 
     @Column(unique = true , nullable = false , length = 255)
     private Date date_naissance;
@@ -42,8 +41,119 @@ public class User {
     private boolean active;
     private boolean verified;
 
+
+    @OneToMany(cascade = CascadeType.ALL , mappedBy = "user" , orphanRemoval = true)
+    @JsonManagedReference("user-commandes")
+    private List<Commande> commandes;
+
+
+
+    @ManyToOne
+    @JoinColumn(name = "ville_id" , nullable = false)
+    @JsonBackReference("ville-user")
+    private Ville ville;
+
+
+    @ManyToOne
+    @JoinColumn(name = "role_id" , nullable = false)
+    @JsonBackReference("role-user")
+    private Role role;
+
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public long getId() {
+        return id;
+    }
+
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public String getPrenom() {
+        return prenom;
+    }
+
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public int getId_ville() {
+        return id_ville;
+    }
+
+    public void setId_ville(int id_ville) {
+        this.id_ville = id_ville;
+    }
+
+    public Date getDate_naissance() {
+        return date_naissance;
+    }
+
+    public void setDate_naissance(Date date_naissance) {
+        this.date_naissance = date_naissance;
+    }
+
+    public Date getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(Date created_at) {
+        this.created_at = created_at;
+    }
+
+    public Date getUpdated_at() {
+        return updated_at;
+    }
+
+    public void setUpdated_at(Date updated_at) {
+        this.updated_at = updated_at;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
     }
 
     public List<Commande> getCommandes() {
@@ -54,141 +164,42 @@ public class User {
         this.commandes = commandes;
     }
 
-    @OneToMany(cascade = CascadeType.ALL , mappedBy = "user" , orphanRemoval = true)
-    @JsonManagedReference
-    private List<Commande> commandes;
-
-
-
-    @ManyToOne
-    @JoinColumn(name = "ville_id" , nullable = false)
-    @JsonBackReference
-    private Ville ville;
-
-    public long getId() {
-        return id;
+    public Ville getVille() {
+        return ville;
     }
 
-    public String getNom() {
-        return nom;
+    public void setVille(Ville ville) {
+        this.ville = ville;
     }
 
-    public String getPrenom() {
-        return prenom;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public int getId_ville() {
-        return id_ville;
-    }
-
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public Date getDate_naissance() {
-        return date_naissance;
-    }
-
-    public Date getCreated_at() {
-        return created_at;
-    }
-
-    public Date getUpdated_at() {
-        return updated_at;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public boolean isVerified() {
-        return verified;
-    }
-
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public void setId_ville(int id_ville) {
-        this.id_ville = id_ville;
-    }
-
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
-    public void setDate_naissance(Date date_naissance) {
+    public User(long id, String nom, String prenom, String email, String password, String phone, int id_ville, Date date_naissance, Date created_at, Date updated_at, boolean active, boolean verified, List<Commande> commandes, Ville ville, Role role) {
+        this.id = id;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.email = email;
+        this.password = password;
+        this.phone = phone;
+        this.id_ville = id_ville;
         this.date_naissance = date_naissance;
-    }
-
-    public void setCreated_at(Date created_at) {
         this.created_at = created_at;
-    }
-
-    public void setUpdated_at(Date updated_at) {
         this.updated_at = updated_at;
-    }
-
-    public void setActive(boolean active) {
         this.active = active;
-    }
-
-    public void setVerified(boolean verified) {
         this.verified = verified;
+        this.commandes = commandes;
+        this.ville = ville;
+        this.role = role;
     }
 
 
     public User() {
 
-    }
-
-
-    public User(int id, String nom, String prenom, String email, String password, String phone, int id_ville, String role, Date date_naissance, Date created_at, Date updated_at, boolean active, boolean verified) {
-        this.id = id;
-        this.nom = nom;
-        this.prenom = prenom;
-        this.email = email;
-        this.password = password;
-        this.phone = phone;
-        this.id_ville = id_ville;
-        this.role = role;
-        this.date_naissance = date_naissance;
-        this.created_at = created_at;
-        this.updated_at = updated_at;
-        this.active = active;
-        this.verified = verified;
     }
 }

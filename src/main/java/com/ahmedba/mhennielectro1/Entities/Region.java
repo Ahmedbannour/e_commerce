@@ -19,12 +19,12 @@ public class Region {
 
     @ManyToOne
     @JoinColumn(name = "pays_id" , nullable = false)
-    @JsonBackReference
+    @JsonBackReference("pays-region")
     private Pays pays;
 
 
     @OneToMany(cascade = CascadeType.ALL , mappedBy = "region" , orphanRemoval = true)
-    @JsonManagedReference
+    @JsonManagedReference("ville-region")
     private List<Ville> villes;
 
 
@@ -64,8 +64,6 @@ public class Region {
     public Region(long id, String label, Pays pays, List<Ville> villes) {
         this.id = id;
         this.label = label;
-        this.pays = pays;
-        this.villes = villes;
     }
 
 
