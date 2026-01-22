@@ -1,6 +1,7 @@
 package com.ahmedba.mhennielectro1.Entities;
 
 import com.ahmedba.mhennielectro1.Entities.User;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.util.List;
@@ -16,8 +17,8 @@ public class Role {
     @Column(unique = true, nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference("role-user")
+    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("role")
     private List<User> users;
 
     // Constructors

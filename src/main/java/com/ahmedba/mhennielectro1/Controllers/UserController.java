@@ -25,12 +25,13 @@ public class UserController {
     @PostMapping
     public ResponseEntity<?> save(@RequestBody User user) {
         if(userRepository.findByEmail(user.getEmail()).isPresent()){
-            return ResponseEntity.badRequest().body("❌ produit existe déja !");
+            return ResponseEntity.badRequest().body("❌ user existe déja !");
         }else{
             User newUser = userRepository.save(user);
             return new ResponseEntity<>(newUser, HttpStatus.CREATED);
         }
     }
+
 
 
 }

@@ -2,6 +2,7 @@ package com.ahmedba.mhennielectro1.Entities;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public class Ville {
 
 
     @OneToMany(cascade = CascadeType.ALL , mappedBy = "ville" , orphanRemoval = true)
-    @JsonBackReference("ville-user")
+    @JsonIgnoreProperties("ville")
     private List<User> users;
 
     public List<User> getUsers() {

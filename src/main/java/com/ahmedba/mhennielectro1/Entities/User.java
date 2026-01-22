@@ -2,6 +2,7 @@ package com.ahmedba.mhennielectro1.Entities;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -31,8 +32,6 @@ public class User {
     @Column(unique = true , nullable = false , length = 255)
     private String phone;
 
-    private int id_ville;
-
     @Column(unique = true , nullable = false , length = 255)
     private Date date_naissance;
     private Date created_at;
@@ -49,14 +48,13 @@ public class User {
 
 
     @ManyToOne
-    @JoinColumn(name = "ville_id" , nullable = false)
-    @JsonBackReference("ville-user")
+    @JoinColumn(name = "ville_id", nullable = false)
+    @JsonIgnoreProperties("users")
     private Ville ville;
 
-
     @ManyToOne
-    @JoinColumn(name = "role_id" , nullable = false)
-    @JsonBackReference("role-user")
+    @JoinColumn(name = "role_id", nullable = false)
+    @JsonIgnoreProperties("users")
     private Role role;
 
 
@@ -106,14 +104,6 @@ public class User {
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public int getId_ville() {
-        return id_ville;
-    }
-
-    public void setId_ville(int id_ville) {
-        this.id_ville = id_ville;
     }
 
     public Date getDate_naissance() {
@@ -180,14 +170,13 @@ public class User {
         this.role = role;
     }
 
-    public User(long id, String nom, String prenom, String email, String password, String phone, int id_ville, Date date_naissance, Date created_at, Date updated_at, boolean active, boolean verified, List<Commande> commandes, Ville ville, Role role) {
+    public User(long id, String nom, String prenom, String email, String password, String phone, Date date_naissance, Date created_at, Date updated_at, boolean active, boolean verified, List<Commande> commandes, Ville ville, Role role) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
         this.password = password;
         this.phone = phone;
-        this.id_ville = id_ville;
         this.date_naissance = date_naissance;
         this.created_at = created_at;
         this.updated_at = updated_at;
