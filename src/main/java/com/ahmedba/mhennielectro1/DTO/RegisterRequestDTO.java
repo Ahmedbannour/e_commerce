@@ -11,7 +11,6 @@ public class RegisterRequestDTO {
     private String phone;
     private Date dateNaissance;
 
-    // rôle optionnel (CLIENT par défaut)
     private String role;
 
     public String getNom() { return nom; }

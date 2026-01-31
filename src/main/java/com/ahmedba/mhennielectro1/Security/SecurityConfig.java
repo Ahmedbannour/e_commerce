@@ -52,7 +52,6 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // ✅ public
                         .requestMatchers("/api/auth/**").permitAll()
-                        // (optionnel) lecture produit public pour e-commerce
                         .requestMatchers("/api/products/**").permitAll()
                         .anyRequest().authenticated()
                 )
