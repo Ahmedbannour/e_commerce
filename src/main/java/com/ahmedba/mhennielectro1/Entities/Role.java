@@ -13,11 +13,11 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
-    private String name;
+    @Column(unique = true, nullable = false, length = 50)
+    private String name;  // "ADMIN", "CLIENT"
 
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
+    @JsonManagedReference("role-users")
     private List<User> users;
 
     // Constructors

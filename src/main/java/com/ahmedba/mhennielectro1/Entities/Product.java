@@ -1,7 +1,5 @@
 package com.ahmedba.mhennielectro1.Entities;
 
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -18,7 +16,6 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-
     @Column(unique = false , nullable = false , length = 255)
     private String description;
 
@@ -30,70 +27,38 @@ public class Product {
     @Column
     private String ref;
 
-
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     @Temporal(TemporalType.TIMESTAMP)
     private Date date_achat;
-
-
-
 
     @OneToOne(optional = true)
     @JoinColumn(name = "garantie_id")
     @JsonManagedReference("product-garantie")
     private Garantie garantie;
 
-
-
     @OneToMany(cascade = CascadeType.ALL , mappedBy = "product" , orphanRemoval = true)
     @JsonManagedReference("depot-product")
     private List<DepotProduct> depotProducts;
-
-
 
     @OneToMany(cascade = CascadeType.ALL , mappedBy = "product" , orphanRemoval = true)
     @JsonManagedReference("commande-product")
     private List<LigneCommande> ligneCommandes;
 
-
     @OneToMany(cascade = CascadeType.ALL , mappedBy = "product" , orphanRemoval = true)
     @JsonIgnore
     private List<Dons> Dons;
 
+    // ✅ NEW: Caracteristiques du produit
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product", orphanRemoval = true)
+    @JsonManagedReference("product-caracteristique")
+    private List<Caracteristique> caracteristiques;
 
+    // ✅ NEW: Photos du produit
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product", orphanRemoval = true)
+    @JsonManagedReference("product-photo")
+    private List<Photo> photos;
 
-    public Garantie getGarantie() {
-        return garantie;
-    }
-
-    public void setGarantie(Garantie garantie) {
-        this.garantie = garantie;
-    }
-
-    public List<DepotProduct> getDepotProducts() {
-        return depotProducts;
-    }
-
-    public void setDepotProducts(List<DepotProduct> depotProducts) {
-        this.depotProducts = depotProducts;
-    }
-
-
-    public List<Dons> getDons() {
-        return Dons;
-    }
-
-    public void setDons(List<Dons> dons) {
-        Dons = dons;
-    }
-
-    public List<LigneCommande> getLigneCommandes() {
-        return ligneCommandes;
-    }
-
-    public void setLigneCommandes(List<LigneCommande> ligneCommandes) {
-        this.ligneCommandes = ligneCommandes;
-    }
+    // ---------------- Getters & Setters ----------------
 
     public long getId() {
         return id;
@@ -119,6 +84,30 @@ public class Product {
         return date_achat;
     }
 
+    public Garantie getGarantie() {
+        return garantie;
+    }
+
+    public List<DepotProduct> getDepotProducts() {
+        return depotProducts;
+    }
+
+    public List<LigneCommande> getLigneCommandes() {
+        return ligneCommandes;
+    }
+
+    public List<Dons> getDons() {
+        return Dons;
+    }
+
+    // ✅ NEW getters
+    public List<Caracteristique> getCaracteristiques() {
+        return caracteristiques;
+    }
+
+    public List<Photo> getPhotos() {
+        return photos;
+    }
 
     public void setId(long id) {
         this.id = id;
@@ -144,6 +133,35 @@ public class Product {
         this.date_achat = date_achat;
     }
 
+    public void setGarantie(Garantie garantie) {
+        this.garantie = garantie;
+    }
+
+    public void setDepotProducts(List<DepotProduct> depotProducts) {
+        this.depotProducts = depotProducts;
+    }
+
+    public void setLigneCommandes(List<LigneCommande> ligneCommandes) {
+        this.ligneCommandes = ligneCommandes;
+    }
+
+    public void setDons(List<Dons> dons) {
+        Dons = dons;
+    }
+
+    // ✅ NEW setters
+    public void setCaracteristiques(List<Caracteristique> caracteristiques) {
+        this.caracteristiques = caracteristiques;
+    }
+
+    public void setPhotos(List<Photo> photos) {
+        this.photos = photos;
+    }
+
+    // ---------------- Constructors ----------------
+
+    public Product() {}
+
     public Product(String description, double price, String ref) {
         this.description = description;
         this.price = price;
@@ -157,9 +175,5 @@ public class Product {
         this.image = image;
         this.ref = ref;
         this.date_achat = date_achat;
-    }
-
-    public Product() {
-
     }
 }
