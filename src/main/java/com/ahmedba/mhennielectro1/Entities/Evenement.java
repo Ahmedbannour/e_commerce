@@ -3,11 +3,13 @@ package com.ahmedba.mhennielectro1.Entities;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.Date;
 import java.util.List;
 
 @Entity
+@Data
 @Table(name = "Evnement")
 public class Evenement {
 
@@ -32,47 +34,6 @@ public class Evenement {
     @JsonManagedReference
     private List<Dons> Dons;
 
-
-
-    public List<Dons> getDons() {
-        return Dons;
-    }
-
-    public void setDons(List<Dons> dons) {
-        Dons = dons;
-    }
-
-    public Date getDate_fin() {
-        return date_fin;
-    }
-
-    public void setDate_fin(Date date_fin) {
-        this.date_fin = date_fin;
-    }
-
-    public Date getDate_debut() {
-        return date_debut;
-    }
-
-    public void setDate_debut(Date date_debut) {
-        this.date_debut = date_debut;
-    }
-
-    public String getLabel() {
-        return label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public Evenement() {
 

@@ -2,8 +2,10 @@ package com.ahmedba.mhennielectro1.Entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
+@Data
 @Table(name = "Dons")
 public class Dons {
 
@@ -32,54 +34,6 @@ public class Dons {
     @JsonBackReference
     private Evenement evenement;
 
-
-    public Evenement getEvenement() {
-        return evenement;
-    }
-
-    public void setEvenement(Evenement evenement) {
-        this.evenement = evenement;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getLabel() {
-        return label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
 
 
     public Dons(Long id, String label, String description, String type, Product product) {

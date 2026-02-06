@@ -3,8 +3,10 @@ package com.ahmedba.mhennielectro1.Entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
+@Data
 @Table(name = "Ville")
 public class Ville {
 
@@ -17,16 +19,9 @@ public class Ville {
     private int code_postal;
 
     @ManyToOne
-    @JoinColumn(name = "region_id" , nullable = false)
+    @JoinColumn(name = "region_id", nullable = false)
     @JsonBackReference
     private Region region;
-
-
-
-
-
-
-
 
 
     public Ville(long id, String label, int code_postal, Region region) {
@@ -40,36 +35,4 @@ public class Ville {
     }
 
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getLabel() {
-        return label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
-    }
-
-    public int getCode_postal() {
-        return code_postal;
-    }
-
-    public void setCode_postal(int code_postal) {
-        this.code_postal = code_postal;
-    }
-
-    public Region getRegion() {
-        return region;
-    }
-
-    public void setRegion(Region region) {
-        this.region = region;
-    }
 }
-

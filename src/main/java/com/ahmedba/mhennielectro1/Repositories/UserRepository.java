@@ -1,11 +1,11 @@
 package com.ahmedba.mhennielectro1.Repositories;
 
-import com.ahmedba.mhennielectro1.Entities.Users;
+import com.ahmedba.mhennielectro1.Entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface UserRepository extends JpaRepository<Users, Long> {
-    Optional<Users> findByEmail(String email);
+public interface UserRepository extends JpaRepository<User, Long> {
+    Optional<User> findByEmail(String email);
     boolean existsByEmail(String email);
 }

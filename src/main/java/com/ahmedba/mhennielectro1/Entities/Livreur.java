@@ -5,11 +5,13 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.Date;
 import java.util.List;
 
 @Entity
+@Data
 @Table(name = "Livreur")
 public class Livreur {
 
@@ -52,87 +54,6 @@ public class Livreur {
     @JsonIgnore
     private SocieteLivraison societeLivraison;
 
-
-    public SocieteLivraison getSocieteLivraison() {
-        return societeLivraison;
-    }
-
-    public void setSocieteLivraison(SocieteLivraison societeLivraison) {
-        this.societeLivraison = societeLivraison;
-    }
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNom() {
-        return nom;
-    }
-
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
-    public String getPrenom() {
-        return prenom;
-    }
-
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public int getId_ville() {
-        return id_ville;
-    }
-
-    public void setId_ville(int id_ville) {
-        this.id_ville = id_ville;
-    }
-
-    public Date getDate_naissance() {
-        return date_naissance;
-    }
-
-    public void setDate_naissance(Date date_naissance) {
-        this.date_naissance = date_naissance;
-    }
-
-    public List<Commande> getCommandes() {
-        return commandes;
-    }
-
-    public void setCommandes(List<Commande> commandes) {
-        this.commandes = commandes;
-    }
 
     public Livreur() {
 

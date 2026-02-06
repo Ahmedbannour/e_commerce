@@ -2,8 +2,10 @@ package com.ahmedba.mhennielectro1.Entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
+@Data
 @Table(name = "photo")
 public class Photo {
 
@@ -26,45 +28,12 @@ public class Photo {
 
     // -------- Constructors --------
 
-    public Photo() {}
+    public Photo() {
+    }
 
     public Photo(String url, boolean main, Product product) {
         this.url = url;
         this.main = main;
-        this.product = product;
-    }
-
-    // -------- Getters & Setters --------
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public boolean isMain() {
-        return main;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public void setMain(boolean main) {
-        this.main = main;
-    }
-
-    public void setProduct(Product product) {
         this.product = product;
     }
 }

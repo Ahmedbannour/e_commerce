@@ -1,6 +1,6 @@
 package com.ahmedba.mhennielectro1.Security;
 
-import com.ahmedba.mhennielectro1.Entities.Users;
+import com.ahmedba.mhennielectro1.Entities.User;
 import com.ahmedba.mhennielectro1.Repositories.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -26,7 +26,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email)
             throws UsernameNotFoundException {
 
-        Users users = userRepository.findByEmail(email)
+        User user = userRepository.findByEmail(email)
                 .orElseThrow(() ->
                         new UsernameNotFoundException(
                                 "User not found with email: " + email
@@ -34,10 +34,10 @@ public class CustomUserDetailsService implements UserDetailsService {
                 );
 
         return org.springframework.security.core.userdetails.User
-                .withUsername(users.getEmail())                // login via email
-                .password(users.getPassword())                 // mot de passe hashé
-                .authorities("ROLE_" + users.getRole().getName()) // ROLE_ADMIN / ROLE_CLIENT
-                .disabled(!users.isActive())                   // compte actif ?
+                .withUsername(user.getEmail())                // login via email
+                .password(user.getPassword())                 // mot de passe hashé
+                .authorities("ROLE_" + user.getRole().getName()) // ROLE_ADMIN / ROLE_CLIENT
+                .disabled(!user.isActive())                   // compte actif ?
                 .build();
     }
 }

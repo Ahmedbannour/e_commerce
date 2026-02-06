@@ -4,10 +4,12 @@ package com.ahmedba.mhennielectro1.Entities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.List;
 
 @Entity
+@Data
 @Table(name = "Depot")
 public class Depot {
 
@@ -31,32 +33,6 @@ public class Depot {
     @JoinColumn(name = "ville_id" , nullable = false)
     @JsonBackReference
     private Ville ville;
-
-
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getLabel() {
-        return label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
-    }
-
-    public String getRef() {
-        return ref;
-    }
-
-    public void setRef(String ref) {
-        this.ref = ref;
-    }
 
 
     public Depot(long id, String label, String ref) {

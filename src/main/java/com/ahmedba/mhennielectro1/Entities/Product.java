@@ -4,11 +4,13 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.Date;
 import java.util.List;
 
 @Entity
+@Data
 @Table(name = "Product")
 public class Product {
 
@@ -58,105 +60,6 @@ public class Product {
     @JsonManagedReference("product-photo")
     private List<Photo> photos;
 
-    // ---------------- Getters & Setters ----------------
-
-    public long getId() {
-        return id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public String getRef() {
-        return ref;
-    }
-
-    public Date getDate_achat() {
-        return date_achat;
-    }
-
-    public Garantie getGarantie() {
-        return garantie;
-    }
-
-    public List<DepotProduct> getDepotProducts() {
-        return depotProducts;
-    }
-
-    public List<LigneCommande> getLigneCommandes() {
-        return ligneCommandes;
-    }
-
-    public List<Dons> getDons() {
-        return Dons;
-    }
-
-    // ✅ NEW getters
-    public List<Caracteristique> getCaracteristiques() {
-        return caracteristiques;
-    }
-
-    public List<Photo> getPhotos() {
-        return photos;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public void setRef(String ref) {
-        this.ref = ref;
-    }
-
-    public void setDate_achat(Date date_achat) {
-        this.date_achat = date_achat;
-    }
-
-    public void setGarantie(Garantie garantie) {
-        this.garantie = garantie;
-    }
-
-    public void setDepotProducts(List<DepotProduct> depotProducts) {
-        this.depotProducts = depotProducts;
-    }
-
-    public void setLigneCommandes(List<LigneCommande> ligneCommandes) {
-        this.ligneCommandes = ligneCommandes;
-    }
-
-    public void setDons(List<Dons> dons) {
-        Dons = dons;
-    }
-
-    // ✅ NEW setters
-    public void setCaracteristiques(List<Caracteristique> caracteristiques) {
-        this.caracteristiques = caracteristiques;
-    }
-
-    public void setPhotos(List<Photo> photos) {
-        this.photos = photos;
-    }
 
     // ---------------- Constructors ----------------
 

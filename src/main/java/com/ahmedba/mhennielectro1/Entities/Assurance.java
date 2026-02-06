@@ -1,8 +1,10 @@
 package com.ahmedba.mhennielectro1.Entities;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
+@Data
 @Table(name = "Assurance")
 public class Assurance {
 
@@ -17,29 +19,6 @@ public class Assurance {
     private String matricule;
 
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getLabel() {
-        return label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
-    }
-
-    public String getMatricule() {
-        return matricule;
-    }
-
-    public void setMatricule(String matricule) {
-        this.matricule = matricule;
-    }
 
     public Assurance(int id, String label, String matricule) {
         this.id = id;

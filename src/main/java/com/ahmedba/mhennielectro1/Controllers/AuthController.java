@@ -2,7 +2,7 @@ package com.ahmedba.mhennielectro1.Controllers;
 
 import com.ahmedba.mhennielectro1.DTO.*;
 import com.ahmedba.mhennielectro1.Entities.Role;
-import com.ahmedba.mhennielectro1.Entities.Users;
+import com.ahmedba.mhennielectro1.Entities.User;
 import com.ahmedba.mhennielectro1.Repositories.RoleRepository;
 import com.ahmedba.mhennielectro1.Repositories.UserRepository;
 import com.ahmedba.mhennielectro1.Security.JwtService;
@@ -59,29 +59,29 @@ public class AuthController {
         Role role = roleRepository.findByName(roleName)
                 .orElseGet(() -> roleRepository.save(new Role(roleName)));
 
-        Users users = new Users();
-        users.setNom(req.getNom());
-        users.setPrenom(req.getPrenom());
-        users.setEmail(req.getEmail());
-        users.setPhone(req.getPhone());
-        users.setDateNaissance(req.getDateNaissance());
-        users.setPassword(passwordEncoder.encode(req.getPassword()));
+        User user = new User();
+        user.setNom(req.getNom());
+        user.setPrenom(req.getPrenom());
+        user.setEmail(req.getEmail());
+        user.setPhone(req.getPhone());
+        user.setDateNaissance(req.getDateNaissance());
+        user.setPassword(passwordEncoder.encode(req.getPassword()));
 
-        users.setRole(role);
+        user.setRole(role);
 
-        users.setActive(true);
-        users.setVerified(false);
-        users.setCreatedAt(new Date());
+        user.setActive(true);
+        user.setVerified(false);
+        user.setCreatedAt(new Date());
 
-        userRepository.save(users);
+        userRepository.save(user);
 
         return ResponseEntity.ok(
                 new RegisterResponseDTO(
-                        users.getId(),
-                        users.getNom(),
-                        users.getPrenom(),
-                        users.getEmail(),
-                        users.getRole().getName(),
+                        user.getId(),
+                        user.getNom(),
+                        user.getPrenom(),
+                        user.getEmail(),
+                        user.getRole().getName(),
                         null,
                         "User registered successfully"
                 )
@@ -96,16 +96,16 @@ public class AuthController {
                 new UsernamePasswordAuthenticationToken(req.getEmail(), req.getPassword())
         );
 
-        Users users = userRepository.findByEmail(req.getEmail()).orElseThrow();
-        String token = jwtService.generateToken(users.getEmail());
+        User user = userRepository.findByEmail(req.getEmail()).orElseThrow();
+        String token = jwtService.generateToken(user.getEmail());
 
         return ResponseEntity.ok(new LoginResponseDTO(
                 token,
-                users.getId(),
-                users.getNom(),
-                users.getPrenom(),
-                users.getEmail(),
-                users.getRole().getName()
+                user.getId(),
+                user.getNom(),
+                user.getPrenom(),
+                user.getEmail(),
+                user.getRole().getName()
         ));
     }
 }

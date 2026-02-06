@@ -4,11 +4,13 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.Date;
 import java.util.List;
 
 @Entity
+@Data
 @Table(name = "Commande")
 public class Commande {
     @Id
@@ -24,7 +26,7 @@ public class Commande {
     @ManyToOne
     @JoinColumn(name = "user_id" , nullable = false)
     @JsonIgnore
-    private Users users;
+    private User user;
 
 
 
@@ -41,51 +43,13 @@ public class Commande {
     public Commande() {
     }
 
-    public Commande(long id, Date date_commande, Users users, Livreur livreur, List<LigneCommande> ligneCommandes) {
+    public Commande(long id, Date date_commande, User user, Livreur livreur, List<LigneCommande> ligneCommandes) {
         this.id = id;
         this.date_commande = date_commande;
-        this.users = users;
+        this.user = user;
         this.livreur = livreur;
         this.ligneCommandes = ligneCommandes;
     }
 
-    public Livreur getLivreur() {
-        return livreur;
-    }
 
-    public void setLivreur(Livreur livreur) {
-        this.livreur = livreur;
-    }
-
-    public List<LigneCommande> getLigneCommandes() {
-        return ligneCommandes;
-    }
-
-    public void setLigneCommandes(List<LigneCommande> ligneCommandes) {
-        this.ligneCommandes = ligneCommandes;
-    }
-
-    public Date getDate_commande() {
-        return date_commande;
-    }
-
-    public void setDate_commande(Date date_commande) {
-        this.date_commande = date_commande;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public Users getUser() {
-        return users;
-    }
-
-    public void setUser(Users users) {
-        this.users = users;
-    }
 }

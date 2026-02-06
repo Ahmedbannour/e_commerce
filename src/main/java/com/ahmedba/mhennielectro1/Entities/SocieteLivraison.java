@@ -4,10 +4,12 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.List;
 
 @Entity
+@Data
 @Table(name = "SocieteLivraison")
 public class SocieteLivraison {
 
@@ -23,54 +25,6 @@ public class SocieteLivraison {
 
     private String email;
 
-
-    public List<Livreur> getLivreurs() {
-        return livreurs;
-    }
-
-    public void setLivreurs(List<Livreur> livreurs) {
-        this.livreurs = livreurs;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getMatricule_fiscale() {
-        return matricule_fiscale;
-    }
-
-    public void setMatricule_fiscale(String matricule_fiscale) {
-        this.matricule_fiscale = matricule_fiscale;
-    }
-
-    public String getTel() {
-        return tel;
-    }
-
-    public void setTel(String tel) {
-        this.tel = tel;
-    }
-
-    public String getLabel() {
-        return label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     @OneToMany(cascade = CascadeType.ALL , mappedBy = "societeLivraison" , orphanRemoval = true)
     @JsonIgnore

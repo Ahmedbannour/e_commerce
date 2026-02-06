@@ -2,10 +2,12 @@ package com.ahmedba.mhennielectro1.Entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.Date;
 
 @Entity
+@Data
 @Table(name = "Garantie")
 public class Garantie {
 
@@ -28,47 +30,6 @@ public class Garantie {
     @OneToOne(mappedBy = "garantie")
     @JsonBackReference("product-garantie")
     private Product product;
-
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getLabel() {
-        return label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
-    }
-
-    public Date getDate_debut() {
-        return date_debut;
-    }
-
-    public void setDate_debut(Date date_debut) {
-        this.date_debut = date_debut;
-    }
-
-    public Date getDate_expiration() {
-        return date_expiration;
-    }
-
-    public void setDate_expiration(Date date_expiration) {
-        this.date_expiration = date_expiration;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
 
 
     public Garantie(long id, String label, Date date_debut, Date date_expiration, Product product) {

@@ -2,8 +2,10 @@ package com.ahmedba.mhennielectro1.Entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
+@Data
 @Table(name = "caracteristique")
 public class Caracteristique {
 
@@ -40,45 +42,4 @@ public class Caracteristique {
         this.product = product;
     }
 
-    // -------- Getters & Setters --------
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getNom() {
-        return nom;
-    }
-
-    public String getValeur() {
-        return valeur;
-    }
-
-    public CaracteristiqueType getType() {
-        return type;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
-    public void setValeur(String valeur) {
-        this.valeur = valeur;
-    }
-
-    public void setType(CaracteristiqueType type) {
-        this.type = type;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
 }

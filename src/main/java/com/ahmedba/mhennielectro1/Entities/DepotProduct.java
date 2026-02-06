@@ -3,8 +3,10 @@ package com.ahmedba.mhennielectro1.Entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
+@Data
 @Table(name = "DepotProduct")
 public class DepotProduct {
 
@@ -31,27 +33,6 @@ public class DepotProduct {
 
     @Column(nullable = false , length = 255 , precision = 0)
     private double quantity;
-
-
-    public long getId() {
-        return id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public Depot getDepot() {
-        return depot;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public double getQuantity() {
-        return quantity;
-    }
 
 
     public DepotProduct() {
