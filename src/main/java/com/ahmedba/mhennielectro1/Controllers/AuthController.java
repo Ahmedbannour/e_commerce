@@ -2,10 +2,9 @@ package com.ahmedba.mhennielectro1.Controllers;
 
 import com.ahmedba.mhennielectro1.DTO.*;
 import com.ahmedba.mhennielectro1.Entities.Role;
-import com.ahmedba.mhennielectro1.Entities.User;
+import com.ahmedba.mhennielectro1.Entities.Users;
 import com.ahmedba.mhennielectro1.Repositories.RoleRepository;
 import com.ahmedba.mhennielectro1.Repositories.UserRepository;
-import com.ahmedba.mhennielectro1.Repositories.VilleRepository;
 import com.ahmedba.mhennielectro1.Security.JwtService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,20 +20,17 @@ public class AuthController {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-    private final VilleRepository villeRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
 
     public AuthController(UserRepository userRepository,
                           RoleRepository roleRepository,
-                          VilleRepository villeRepository,
                           PasswordEncoder passwordEncoder,
                           AuthenticationManager authenticationManager,
                           JwtService jwtService) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
-        this.villeRepository = villeRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.jwtService = jwtService;
@@ -63,30 +59,29 @@ public class AuthController {
         Role role = roleRepository.findByName(roleName)
                 .orElseGet(() -> roleRepository.save(new Role(roleName)));
 
-        User user = new User();
-        user.setNom(req.getNom());
-        user.setPrenom(req.getPrenom());
-        user.setEmail(req.getEmail());
-        user.setPhone(req.getPhone());
-        user.setDateNaissance(req.getDateNaissance());
-        user.setPassword(passwordEncoder.encode(req.getPassword()));
+        Users users = new Users();
+        users.setNom(req.getNom());
+        users.setPrenom(req.getPrenom());
+        users.setEmail(req.getEmail());
+        users.setPhone(req.getPhone());
+        users.setDateNaissance(req.getDateNaissance());
+        users.setPassword(passwordEncoder.encode(req.getPassword()));
 
-        user.setRole(role);
-        user.setVille(null); // ✅ ville ignorée pour le moment
+        users.setRole(role);
 
-        user.setActive(true);
-        user.setVerified(false);
-        user.setCreatedAt(new Date());
+        users.setActive(true);
+        users.setVerified(false);
+        users.setCreatedAt(new Date());
 
-        userRepository.save(user);
+        userRepository.save(users);
 
         return ResponseEntity.ok(
                 new RegisterResponseDTO(
-                        user.getId(),
-                        user.getNom(),
-                        user.getPrenom(),
-                        user.getEmail(),
-                        user.getRole().getName(),
+                        users.getId(),
+                        users.getNom(),
+                        users.getPrenom(),
+                        users.getEmail(),
+                        users.getRole().getName(),
                         null,
                         "User registered successfully"
                 )
@@ -101,16 +96,16 @@ public class AuthController {
                 new UsernamePasswordAuthenticationToken(req.getEmail(), req.getPassword())
         );
 
-        User user = userRepository.findByEmail(req.getEmail()).orElseThrow();
-        String token = jwtService.generateToken(user.getEmail());
+        Users users = userRepository.findByEmail(req.getEmail()).orElseThrow();
+        String token = jwtService.generateToken(users.getEmail());
 
         return ResponseEntity.ok(new LoginResponseDTO(
                 token,
-                user.getId(),
-                user.getNom(),
-                user.getPrenom(),
-                user.getEmail(),
-                user.getRole().getName()
+                users.getId(),
+                users.getNom(),
+                users.getPrenom(),
+                users.getEmail(),
+                users.getRole().getName()
         ));
     }
 }

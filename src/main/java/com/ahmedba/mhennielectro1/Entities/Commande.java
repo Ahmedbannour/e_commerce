@@ -24,7 +24,7 @@ public class Commande {
     @ManyToOne
     @JoinColumn(name = "user_id" , nullable = false)
     @JsonIgnore
-    private User user;
+    private Users users;
 
 
 
@@ -41,10 +41,10 @@ public class Commande {
     public Commande() {
     }
 
-    public Commande(long id, Date date_commande, User user, Livreur livreur, List<LigneCommande> ligneCommandes) {
+    public Commande(long id, Date date_commande, Users users, Livreur livreur, List<LigneCommande> ligneCommandes) {
         this.id = id;
         this.date_commande = date_commande;
-        this.user = user;
+        this.users = users;
         this.livreur = livreur;
         this.ligneCommandes = ligneCommandes;
     }
@@ -81,11 +81,11 @@ public class Commande {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public Users getUser() {
+        return users;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(Users users) {
+        this.users = users;
     }
 }

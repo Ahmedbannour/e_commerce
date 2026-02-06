@@ -12,30 +12,37 @@ import java.util.Date;
 @Service
 public class JwtService {
 
-    private final SecretKey key;
+    private final SecretKey secretKey;
     private final long expirationMs;
 
     public JwtService(
             @Value("${app.jwt.secret}") String secret,
             @Value("${app.jwt.expiration-ms}") long expirationMs
     ) {
-        this.key = Keys.hmacShaKeyFor(secret.getBytes());
+        this.secretKey = Keys.hmacShaKeyFor(secret.getBytes());
         this.expirationMs = expirationMs;
     }
 
-    public String generateToken(String subject) {
+    // 🔐 Générer un token (subject = email)
+    public String generateToken(String email) {
         Date now = new Date();
-        Date exp = new Date(now.getTime() + expirationMs);
+        Date expiryDate = new Date(now.getTime() + expirationMs);
 
         return Jwts.builder()
-                .subject(subject)
+                .subject(email)
                 .issuedAt(now)
-                .expiration(exp)
-                .signWith(key)
+                .expiration(expiryDate)
+                .signWith(secretKey)
                 .compact();
     }
 
-    public boolean isValid(String token) {
+    // 🔎 Extraire l'email depuis le token
+    public String extractEmail(String token) {
+        return extractClaims(token).getSubject();
+    }
+
+    // ✅ Vérifier validité du token
+    public boolean isTokenValid(String token) {
         try {
             return extractClaims(token).getExpiration().after(new Date());
         } catch (Exception e) {
@@ -43,13 +50,9 @@ public class JwtService {
         }
     }
 
-    public String extractSubject(String token) {
-        return extractClaims(token).getSubject();
-    }
-
     private Claims extractClaims(String token) {
         return Jwts.parser()
-                .verifyWith(key)
+                .verifyWith(secretKey)
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();

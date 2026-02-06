@@ -1,5 +1,7 @@
 package com.ahmedba.mhennielectro1.DTO;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class RegisterRequestDTO {
@@ -9,6 +11,8 @@ public class RegisterRequestDTO {
     private String email;
     private String password;
     private String phone;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date dateNaissance;
 
     private String role;

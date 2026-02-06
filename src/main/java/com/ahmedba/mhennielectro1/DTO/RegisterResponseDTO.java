@@ -6,7 +6,6 @@ public class RegisterResponseDTO {
     private String prenom;
     private String email;
     private String role;
-    private String ville;
     private String message;
 
     public RegisterResponseDTO(long id, String nom, String prenom, String email, String role, String ville, String message) {
@@ -15,7 +14,6 @@ public class RegisterResponseDTO {
         this.prenom = prenom;
         this.email = email;
         this.role = role;
-        this.ville = ville;
         this.message = message;
     }
 
@@ -24,6 +22,5 @@ public class RegisterResponseDTO {
     public String getPrenom() { return prenom; }
     public String getEmail() { return email; }
     public String getRole() { return role; }
-    public String getVille() { return ville; }
     public String getMessage() { return message; }
 }

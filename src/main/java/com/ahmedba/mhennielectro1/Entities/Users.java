@@ -9,7 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,7 +45,7 @@ public class User {
 
     // ================= Relations =================
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "users", orphanRemoval = true)
     @JsonManagedReference
     private List<Commande> commandes;
 
@@ -54,17 +54,17 @@ public class User {
     @JsonBackReference("role-users")
     private Role role;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "ville_id", nullable = false)
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "ville_id", nullable = true)
     @JsonBackReference
     private Ville ville;
 
     // ================= Constructors =================
 
-    public User() {}
+    public Users() {}
 
-    public User(String nom, String prenom, String email, String password,
-                String phone, Date dateNaissance, Role role, Ville ville) {
+    public Users(String nom, String prenom, String email, String password,
+                 String phone, Date dateNaissance, Role role, Ville ville) {
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;

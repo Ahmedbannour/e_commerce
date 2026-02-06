@@ -1,6 +1,5 @@
 package com.ahmedba.mhennielectro1.Entities;
 
-import com.ahmedba.mhennielectro1.Entities.User;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.util.List;
@@ -18,7 +17,7 @@ public class Role {
 
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference("role-users")
-    private List<User> users;
+    private List<Users> users;
 
     // Constructors
     public Role() {}
@@ -36,7 +35,7 @@ public class Role {
         return name;
     }
 
-    public List<User> getUsers() {
+    public List<Users> getUsers() {
         return users;
     }
 
@@ -48,7 +47,7 @@ public class Role {
         this.name = name;
     }
 
-    public void setUsers(List<User> users) {
+    public void setUsers(List<Users> users) {
         this.users = users;
     }
 
