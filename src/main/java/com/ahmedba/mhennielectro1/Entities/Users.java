@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 @Data
 @Table(name = "users")
-public class User {
+public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,7 +47,7 @@ public class User {
 
     // ================= Relations =================
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Commande> commandes;
 
@@ -63,11 +63,11 @@ public class User {
 
     // ================= Constructors =================
 
-    public User() {
+    public Users() {
     }
 
-    public User(String nom, String prenom, String email, String password,
-                String phone, Date dateNaissance, Role role, Ville ville) {
+    public Users(String nom, String prenom, String email, String password,
+                 String phone, Date dateNaissance, Role role, Ville ville) {
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;

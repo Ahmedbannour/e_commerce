@@ -8,7 +8,7 @@ public class RegisterResponseDTO {
     private String role;
     private String message;
 
-    public RegisterResponseDTO(long id, String nom, String prenom, String email, String role, String ville, String message) {
+    public RegisterResponseDTO(long id, String nom, String prenom, String email, String role, String ville) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;

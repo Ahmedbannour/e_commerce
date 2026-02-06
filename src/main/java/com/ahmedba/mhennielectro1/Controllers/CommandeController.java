@@ -1,7 +1,6 @@
 package com.ahmedba.mhennielectro1.Controllers;
 
 import com.ahmedba.mhennielectro1.Entities.Commande;
-import com.ahmedba.mhennielectro1.Entities.Livreur;
 import com.ahmedba.mhennielectro1.Repositories.CommandeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -52,7 +51,7 @@ public class CommandeController {
 
                     existing.setDate_commande(commande.getDate_commande());
                     existing.setLigneCommandes(commande.getLigneCommandes());
-                    existing.setUser(commande.getUser());
+                    existing.setUsers(commande.getUsers());
                     existing.setLivreur(commande.getLivreur());
 
                     Commande updated = commandeRepository.save(existing);

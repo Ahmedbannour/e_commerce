@@ -19,46 +19,68 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final CustomUserDetailsService userDetailsService;
 
-    public JwtAuthFilter(JwtService jwtService, CustomUserDetailsService userDetailsService) {
+    public JwtAuthFilter(
+            JwtService jwtService,
+            CustomUserDetailsService userDetailsService
+    ) {
         this.jwtService = jwtService;
         this.userDetailsService = userDetailsService;
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response,
-                                    FilterChain filterChain)
-            throws ServletException, IOException {
+    protected void doFilterInternal(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            FilterChain filterChain
+    ) throws ServletException, IOException {
 
-        String authHeader = request.getHeader("Authorization");
+        final String authHeader = request.getHeader("Authorization");
 
-        // Pas de token → on laisse passer
+        // 🔹 Pas de token → continuer la chaîne
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }
 
-        String token = authHeader.substring(7);
+        final String token = authHeader.substring(7);
+        final String email;
 
-        if (!jwtService.isTokenValid(token)) {
+        try {
+            if (!jwtService.isTokenValid(token)) {
+                filterChain.doFilter(request, response);
+                return;
+            }
+
+            email = jwtService.extractEmail(token);
+
+        } catch (Exception e) {
+            // Token invalide / expiré / mal formé
             filterChain.doFilter(request, response);
             return;
         }
 
-        String email = jwtService.extractEmail(token);
-
+        // 🔹 Authentification uniquement si absente
         if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = userDetailsService.loadUserByUsername(email);
 
-            UsernamePasswordAuthenticationToken auth =
-                    new UsernamePasswordAuthenticationToken(
-                            userDetails,
-                            null,
-                            userDetails.getAuthorities()
-                    );
+            UserDetails userDetails =
+                    userDetailsService.loadUserByUsername(email);
 
-            auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-            SecurityContextHolder.getContext().setAuthentication(auth);
+            // 🔐 Optionnel mais recommandé
+            if (userDetails.getUsername().equals(email)) {
+
+                UsernamePasswordAuthenticationToken authentication =
+                        new UsernamePasswordAuthenticationToken(
+                                userDetails,
+                                null,
+                                userDetails.getAuthorities()
+                        );
+
+                authentication.setDetails(
+                        new WebAuthenticationDetailsSource().buildDetails(request)
+                );
+
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
         }
 
         filterChain.doFilter(request, response);

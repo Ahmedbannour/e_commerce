@@ -20,7 +20,7 @@ public class Role {
 
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference("role-users")
-    private List<User> users;
+    private List<Users> users;
 
     // Constructors
     public Role() {

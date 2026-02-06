@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 @Service
@@ -19,11 +20,11 @@ public class JwtService {
             @Value("${app.jwt.secret}") String secret,
             @Value("${app.jwt.expiration-ms}") long expirationMs
     ) {
-        this.secretKey = Keys.hmacShaKeyFor(secret.getBytes());
+        this.secretKey = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
         this.expirationMs = expirationMs;
     }
 
-    // 🔐 Générer un token (subject = email)
+    // 🔐 Générer un token JWT (subject = email)
     public String generateToken(String email) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + expirationMs);
@@ -41,15 +42,17 @@ public class JwtService {
         return extractClaims(token).getSubject();
     }
 
-    // ✅ Vérifier validité du token
+    // ✅ Vérifier la validité du token
     public boolean isTokenValid(String token) {
         try {
-            return extractClaims(token).getExpiration().after(new Date());
+            Claims claims = extractClaims(token);
+            return claims.getExpiration().after(new Date());
         } catch (Exception e) {
             return false;
         }
     }
 
+    // 🔐 Extraction générique des claims
     private Claims extractClaims(String token) {
         return Jwts.parser()
                 .verifyWith(secretKey)
