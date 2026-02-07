@@ -53,9 +53,7 @@ public class SecurityConfig {
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
         var authManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
-        authManagerBuilder
-                .userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder());
+        authManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
         return authManagerBuilder.build();
     }
 }

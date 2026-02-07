@@ -1,17 +1,22 @@
 package com.ahmedba.mhennielectro1.Entities;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "Product")
+@Table(name = "products")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Product {
 
     @Id
@@ -60,106 +65,8 @@ public class Product {
     @JsonIgnore
     private List<Dons> Dons;
 
-
-
-    public Garantie getGarantie() {
-        return garantie;
-    }
-
-    public void setGarantie(Garantie garantie) {
-        this.garantie = garantie;
-    }
-
-    public List<DepotProduct> getDepotProducts() {
-        return depotProducts;
-    }
-
-    public void setDepotProducts(List<DepotProduct> depotProducts) {
-        this.depotProducts = depotProducts;
-    }
-
-
-    public List<Dons> getDons() {
-        return Dons;
-    }
-
-    public void setDons(List<Dons> dons) {
-        Dons = dons;
-    }
-
-    public List<LigneCommande> getLigneCommandes() {
-        return ligneCommandes;
-    }
-
-    public void setLigneCommandes(List<LigneCommande> ligneCommandes) {
-        this.ligneCommandes = ligneCommandes;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public String getRef() {
-        return ref;
-    }
-
-    public Date getDate_achat() {
-        return date_achat;
-    }
-
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public void setRef(String ref) {
-        this.ref = ref;
-    }
-
-    public void setDate_achat(Date date_achat) {
-        this.date_achat = date_achat;
-    }
-
-    public Product(String description, double price, String ref) {
-        this.description = description;
-        this.price = price;
-        this.ref = ref;
-    }
-
-    public Product(long id, String description, double price, String image, String ref, Date date_achat) {
-        this.id = id;
-        this.description = description;
-        this.price = price;
-        this.image = image;
-        this.ref = ref;
-        this.date_achat = date_achat;
-    }
-
-    public Product() {
-
-    }
+    @ManyToOne
+    @JoinColumn(name = "categorie_id", nullable = false)
+    @JsonIgnoreProperties("products")
+    private Categorie categorie;
 }
