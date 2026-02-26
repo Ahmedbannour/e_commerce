@@ -22,15 +22,22 @@ public class JwtUtils {
         return Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
     }
 
-    // 1. Génération du Token (Nouveau Builder)
     public String generateJwtToken(Authentication authentication) {
-        UserDetails userPrincipal = (UserDetails) authentication.getPrincipal();
+        // Cast vers notre classe personnalisée
+        UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
+
+        String authority = userPrincipal.getAuthorities().iterator().next().getAuthority();
 
         return Jwts.builder()
                 .subject(userPrincipal.getUsername())
+                .claim("role", authority)
+                .claim("nom", userPrincipal.getNom())       // ✅ Ajouté
+                .claim("prenom", userPrincipal.getPrenom()) // ✅ Ajouté
+                .claim("phone", userPrincipal.getPhone())   // ✅ Ajouté
+                .claim("verified", userPrincipal.isVerified()) // ✅ Ajouté
                 .issuedAt(new Date())
                 .expiration(new Date((new Date()).getTime() + jwtExpirationMs))
-                .signWith(key()) // L'algorithme est détecté automatiquement selon la clé
+                .signWith(key())
                 .compact();
     }
 

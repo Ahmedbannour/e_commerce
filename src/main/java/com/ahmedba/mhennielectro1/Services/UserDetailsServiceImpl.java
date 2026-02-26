@@ -22,15 +22,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
 
-        User user = userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
-
-        GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + user.getRole().getName());
-
-        return new org.springframework.security.core.userdetails.User(
-                user.getEmail(),      // ✅ username
-                user.getPassword(),   // ✅ password
-                Set.of(authority)     // ✅ une seule autorité
-        );
+        // On utilise la méthode static build qu'on a créée
+        return UserDetailsImpl.build(user);
     }
 }

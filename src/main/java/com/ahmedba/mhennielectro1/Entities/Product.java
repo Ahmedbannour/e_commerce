@@ -24,8 +24,13 @@ public class Product {
     private long id;
 
 
+
+
     @Column(unique = false , nullable = false , length = 255)
     private String description;
+
+    @Column(unique = false , nullable = false , length = 255)
+    private String label;
 
     @Column(length = 255)
     private double price;
@@ -48,12 +53,9 @@ public class Product {
     @JsonManagedReference("product-garantie")
     private Garantie garantie;
 
-
-
     @OneToMany(cascade = CascadeType.ALL , mappedBy = "product" , orphanRemoval = true)
     @JsonManagedReference("depot-product")
     private List<DepotProduct> depotProducts;
-
 
 
     @OneToMany(cascade = CascadeType.ALL , mappedBy = "product" , orphanRemoval = true)
@@ -64,6 +66,7 @@ public class Product {
     @OneToMany(cascade = CascadeType.ALL , mappedBy = "product" , orphanRemoval = true)
     @JsonIgnore
     private List<Dons> Dons;
+
 
     @ManyToOne
     @JoinColumn(name = "categorie_id", nullable = false)

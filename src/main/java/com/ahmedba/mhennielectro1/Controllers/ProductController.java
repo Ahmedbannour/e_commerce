@@ -19,6 +19,21 @@ public class ProductController {
     private ProductRepository productRepository;
 
 
+    @GetMapping("/getProdcutsByCategory/{categoryId}")
+    public List<Product> getProductsByCategory(@PathVariable Long categoryId) {
+        return productRepository.findByCategorieId(categoryId);
+    }
+
+    @GetMapping("/{productId}")
+
+    public Product getProductById(@PathVariable Long productId) {
+        if(productRepository.findById(productId).isPresent()){
+            return productRepository.findById(productId).get();
+        }else{
+            return null;
+        }
+    }
+
     @PostMapping
     public ResponseEntity<?> save(@RequestBody Product product){
         if(productRepository.findByRef(product.getRef()).isPresent()){
@@ -34,6 +49,7 @@ public class ProductController {
     public ResponseEntity<List<Product>> getAll(){
         return ResponseEntity.ok().body(productRepository.findAll());
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id){
@@ -67,6 +83,6 @@ public class ProductController {
                     return ResponseEntity.ok(updated);
                 })
                 .orElse(ResponseEntity.notFound().build());
-        }
+    }
 
 }

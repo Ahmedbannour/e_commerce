@@ -1,5 +1,6 @@
 package com.ahmedba.mhennielectro1.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
@@ -35,6 +36,6 @@ public class Categorie {
     // --- RELATION AVEC PRODUITS ---
 
     @OneToMany(mappedBy = "categorie", cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("categorie")
+    @JsonIgnore
     private List<Product> products;
 }

@@ -17,6 +17,14 @@ public class CategorieController {
     @Autowired
     private CategorieRepository categorieRepository;
 
+    @GetMapping()
+    public ResponseEntity<ApiResponse<List<Categorie>>> getCategories() {
+        List<Categorie> roots = categorieRepository.findAll();
+        return ResponseEntity.ok(new ApiResponse<>("success", "Liste des catégories", roots));
+    }
+
+
+
     @GetMapping("/roots")
     public ResponseEntity<ApiResponse<List<Categorie>>> getRootCategories() {
         List<Categorie> roots = categorieRepository.findByParentIsNull();
