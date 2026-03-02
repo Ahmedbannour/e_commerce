@@ -46,6 +46,7 @@ public class SecurityConfig {
                         .requestMatchers("/ville/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/user/**").permitAll()
+                        .requestMatchers("/depots/**").permitAll()
                         .anyRequest().authenticated()
                 );
 
