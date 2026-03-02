@@ -72,4 +72,14 @@ public class Product {
     @JoinColumn(name = "categorie_id", nullable = false)
     @JsonIgnoreProperties("products")
     private Categorie categorie;
+
+
+    public double getTotalStock() {
+        if (this.depotProducts == null || this.depotProducts.isEmpty()) {
+            return 0;
+        }
+        return this.depotProducts.stream()
+                .mapToDouble(DepotProduct::getQuantity)
+                .sum();
+    }
 }

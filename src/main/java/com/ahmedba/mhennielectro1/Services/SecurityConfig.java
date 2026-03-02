@@ -40,11 +40,12 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll()
                         // ⚠️ Attention : Vérifie que ton URL d'inscription est bien /user/register
-                        .requestMatchers("/user/register").permitAll()
                         .requestMatchers("/categories/**").permitAll()
                         .requestMatchers("/produits/**").permitAll()
+                        .requestMatchers("/commandes/**").permitAll()
+                        .requestMatchers("/ville/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/user/**").permitAll()
                         .anyRequest().authenticated()
                 );
 

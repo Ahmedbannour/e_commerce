@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
@@ -47,6 +48,16 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse<>("success", "Utilisateur créé avec succès", newUser));
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse<>("error", e.getMessage(), null));
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable Integer id) {
+        if(userRepository.findAllById(id).isPresent()){
+            userRepository.deleteById(Long.valueOf(id));
+            return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>("success", "Utilisateur supprimer avec succès", null));
+        }else{
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse<>("erro", "Utilisateur non trouvés", null));
         }
     }
 
