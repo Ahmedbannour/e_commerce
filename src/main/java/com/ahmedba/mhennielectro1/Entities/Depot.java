@@ -4,11 +4,19 @@ package com.ahmedba.mhennielectro1.Entities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Entity
 @Table(name = "Depot")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Depot {
 
     @Id
@@ -29,43 +37,8 @@ public class Depot {
 
     @ManyToOne
     @JoinColumn(name = "ville_id" , nullable = false)
-    @JsonBackReference
+    @JsonManagedReference
     private Ville ville;
 
 
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getLabel() {
-        return label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
-    }
-
-    public String getRef() {
-        return ref;
-    }
-
-    public void setRef(String ref) {
-        this.ref = ref;
-    }
-
-
-    public Depot(long id, String label, String ref) {
-        this.id = id;
-        this.label = label;
-        this.ref = ref;
-    }
-
-    public Depot() {
-
-    }
 }

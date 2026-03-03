@@ -3,6 +3,7 @@ package com.ahmedba.mhennielectro1.Controllers;
 
 import com.ahmedba.mhennielectro1.Entities.Product;
 import com.ahmedba.mhennielectro1.Repositories.ProductRepository;
+import com.ahmedba.mhennielectro1.Utils.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +21,9 @@ public class ProductController {
 
 
     @GetMapping("/getProdcutsByCategory/{categoryId}")
-    public List<Product> getProductsByCategory(@PathVariable Long categoryId) {
-        return productRepository.findByCategorieId(categoryId);
+    public ResponseEntity<ApiResponse<List<Product>>> getProductsByCategory(@PathVariable Long categoryId) {
+        List<Product> productsFiltred = productRepository.findByCategorieId(categoryId);
+        return ResponseEntity.ok(new ApiResponse<>("success", "Liste des produits", productsFiltred));
     }
 
     @GetMapping("/{productId}")

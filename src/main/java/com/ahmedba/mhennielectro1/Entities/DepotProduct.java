@@ -2,6 +2,7 @@ package com.ahmedba.mhennielectro1.Entities;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -33,7 +34,7 @@ public class DepotProduct {
 
     @ManyToOne
     @JoinColumn(name = "product_id" , nullable = false)
-    @JsonBackReference("depot-product")
+    @JsonIgnoreProperties({"depotProducts", "ligneCommandes", "Dons", "categorie"})
     private Product product;
 
 

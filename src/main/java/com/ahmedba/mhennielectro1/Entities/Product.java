@@ -54,7 +54,7 @@ public class Product {
     private Garantie garantie;
 
     @OneToMany(cascade = CascadeType.ALL , mappedBy = "product" , orphanRemoval = true)
-    @JsonManagedReference("depot-product")
+    @JsonIgnoreProperties("product") // Ignore le retour vers le produit dans la liste des dépôts
     private List<DepotProduct> depotProducts;
 
 
@@ -78,8 +78,6 @@ public class Product {
         if (this.depotProducts == null || this.depotProducts.isEmpty()) {
             return 0;
         }
-        return this.depotProducts.stream()
-                .mapToDouble(DepotProduct::getQuantity)
-                .sum();
+        return this.depotProducts.stream().mapToDouble(DepotProduct::getQuantity).sum();
     }
 }
