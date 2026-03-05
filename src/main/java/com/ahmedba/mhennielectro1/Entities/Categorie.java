@@ -27,11 +27,14 @@ public class Categorie {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
-    @JsonIgnoreProperties({"subCategories", "products"}) // Évite la récursion infinie
+    // On ajoute les deux propriétés techniques d'Hibernate à ignorer
+    @JsonIgnoreProperties({"subCategories", "products", "hibernateLazyInitializer", "handler"})
     private Categorie parent;
 
-    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
+
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Categorie> subCategories;
+
 
     // --- RELATION AVEC PRODUITS ---
 

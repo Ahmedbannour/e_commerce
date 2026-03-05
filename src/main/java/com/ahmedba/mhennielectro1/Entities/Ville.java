@@ -4,11 +4,19 @@ package com.ahmedba.mhennielectro1.Entities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Entity
 @Table(name = "Ville")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Ville {
 
     @Id
@@ -31,55 +39,10 @@ public class Ville {
     @JsonIgnoreProperties("ville")
     private List<User> users;
 
-    public List<User> getUsers() {
-        return users;
-    }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
+    @OneToMany(mappedBy = "ville")
+    @JsonIgnoreProperties("ville") // Très important pour couper la boucle Ville -> Depot -> Ville
+    private List<Depot> depots;
 
-    public Ville(long id, String label, int code_postal, Region region) {
-        this.id = id;
-        this.label = label;
-        this.code_postal = code_postal;
-        this.region = region;
-    }
-
-    public Ville() {
-    }
-
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getLabel() {
-        return label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
-    }
-
-    public int getCode_postal() {
-        return code_postal;
-    }
-
-    public void setCode_postal(int code_postal) {
-        this.code_postal = code_postal;
-    }
-
-    public Region getRegion() {
-        return region;
-    }
-
-    public void setRegion(Region region) {
-        this.region = region;
-    }
 }
 

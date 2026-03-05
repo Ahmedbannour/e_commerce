@@ -2,6 +2,7 @@ package com.ahmedba.mhennielectro1.Entities;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -31,13 +32,13 @@ public class Depot {
 
 
     @OneToMany(cascade = CascadeType.ALL , mappedBy = "depot" , orphanRemoval = true)
-    @JsonManagedReference
+    @JsonIgnoreProperties("depot")
     private List<DepotProduct> depotProducts;
 
 
     @ManyToOne
-    @JoinColumn(name = "ville_id" , nullable = false)
-    @JsonManagedReference
+    @JoinColumn(name = "ville_id" , nullable = true)
+    @JsonIgnoreProperties("depots")
     private Ville ville;
 
 

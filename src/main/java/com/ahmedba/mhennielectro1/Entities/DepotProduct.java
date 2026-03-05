@@ -28,7 +28,7 @@ public class DepotProduct {
 
     @ManyToOne
     @JoinColumn(name = "depot_id" , nullable = false)
-    @JsonBackReference
+    @JsonIgnoreProperties("depotProducts")
     private Depot depot;
 
 

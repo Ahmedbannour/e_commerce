@@ -35,6 +35,6 @@ public class CategorieController {
     public ResponseEntity<ApiResponse<Categorie>> create(@RequestBody Categorie categorie) {
         Categorie saved = categorieRepository.save(categorie);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(new ApiResponse<>("success", "Catégorie créée", saved));
+                .body(new ApiResponse<>("success", "Catégorie crée", saved));
     }
 }

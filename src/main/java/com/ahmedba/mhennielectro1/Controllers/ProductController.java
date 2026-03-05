@@ -1,6 +1,7 @@
 package com.ahmedba.mhennielectro1.Controllers;
 
 
+import com.ahmedba.mhennielectro1.Entities.Categorie;
 import com.ahmedba.mhennielectro1.Entities.Product;
 import com.ahmedba.mhennielectro1.Repositories.ProductRepository;
 import com.ahmedba.mhennielectro1.Utils.ApiResponse;
@@ -37,12 +38,14 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody Product product){
+    public ResponseEntity<ApiResponse<Product>> save(@RequestBody Product product){
         if(productRepository.findByRef(product.getRef()).isPresent()){
-            return ResponseEntity.badRequest().body("❌ produit existe déja !");
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(new ApiResponse<>("error", "Produit existe déja", null));
         }else{
             Product newProduct = productRepository.save(product);
-            return ResponseEntity.ok().body(newProduct);
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(new ApiResponse<>("success", "Produit crée", newProduct));
         }
     }
 
