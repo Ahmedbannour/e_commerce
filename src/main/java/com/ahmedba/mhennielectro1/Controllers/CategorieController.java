@@ -34,7 +34,17 @@ public class CategorieController {
     @PostMapping
     public ResponseEntity<ApiResponse<Categorie>> create(@RequestBody Categorie categorie) {
         Categorie saved = categorieRepository.save(categorie);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(new ApiResponse<>("success", "Catégorie crée", saved));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse<>("success", "Catégorie crée", saved));
+    }
+
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<ApiResponse<Categorie>> delete(@PathVariable int id) {
+        if(categorieRepository.findAllById(id).isPresent()){
+            categorieRepository.deleteById(Long.valueOf(id));
+            return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>("success", "Categorie supprimer avec succès", null));
+        }else{
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse<>("error", "Categorie non trouvés", null));
+        }
     }
 }

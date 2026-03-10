@@ -57,7 +57,7 @@ public class UserController {
             userRepository.deleteById(Long.valueOf(id));
             return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>("success", "Utilisateur supprimer avec succès", null));
         }else{
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse<>("erro", "Utilisateur non trouvés", null));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse<>("error", "Utilisateur non trouvés", null));
         }
     }
 

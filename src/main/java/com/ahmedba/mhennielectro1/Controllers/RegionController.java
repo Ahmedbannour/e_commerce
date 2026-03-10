@@ -34,7 +34,7 @@ public class RegionController {
 
     @GetMapping
     public ResponseEntity<?> findAll() {
-        return ResponseEntity.ok(regionRepository.findAll());
+        return ResponseEntity.ok(regionRepository.findAllWithVilles());
     }
 
     @PutMapping("/{id}")

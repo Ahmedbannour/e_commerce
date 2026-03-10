@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
 
@@ -24,6 +26,17 @@ public class UserService {
         // 1. Vérifier si l'email existe
         if (userRepository.findByEmail(user.getEmail()).isPresent()) {
             throw new RuntimeException("Cet email est déjà utilisé !");
+        }
+
+
+        List<Role> roles = roleRepository.findAll();
+
+        if (!roles.isEmpty()) {
+            // On prend le premier rôle de la liste
+            user.setRole(roles.get(0));
+        } else {
+            // Optionnel : Créer un rôle par défaut si la table est vide
+            throw new RuntimeException("Aucun rôle configuré dans la base de données");
         }
 
         // 2. Hachage du mot de passe (CRUCIAL pour la sécurité)

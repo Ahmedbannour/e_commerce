@@ -5,11 +5,20 @@ import com.ahmedba.mhennielectro1.Entities.Categorie;
 import com.ahmedba.mhennielectro1.Entities.Product;
 import com.ahmedba.mhennielectro1.Repositories.ProductRepository;
 import com.ahmedba.mhennielectro1.Utils.ApiResponse;
+import com.ahmedba.mhennielectro1.Utils.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +29,8 @@ public class ProductController {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private StorageService storageService; // On injecte le service ici
 
     @GetMapping("/getProdcutsByCategory/{categoryId}")
     public ResponseEntity<ApiResponse<List<Product>>> getProductsByCategory(@PathVariable Long categoryId) {
@@ -37,16 +48,28 @@ public class ProductController {
         }
     }
 
-    @PostMapping
-    public ResponseEntity<ApiResponse<Product>> save(@RequestBody Product product){
-        if(productRepository.findByRef(product.getRef()).isPresent()){
-            return ResponseEntity.status(HttpStatus.CREATED)
-                    .body(new ApiResponse<>("error", "Produit existe déja", null));
-        }else{
-            Product newProduct = productRepository.save(product);
-            return ResponseEntity.status(HttpStatus.CREATED)
-                    .body(new ApiResponse<>("success", "Produit crée", newProduct));
+
+
+
+    @PostMapping(consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    public ResponseEntity<ApiResponse<Product>> save(
+            @RequestPart("product") Product product,
+            @RequestPart(value = "image", required = false) MultipartFile image) {
+
+        if (productRepository.findByRef(product.getRef()).isPresent()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ApiResponse<>("error", "Référence existante", null));
         }
+
+        if (image != null && !image.isEmpty()) {
+            // Utilisation du service pour stocker le fichier
+            String fileName = storageService.store(image);
+            product.setImage(fileName);
+        }
+
+        Product newProduct = productRepository.save(product);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(new ApiResponse<>("success", "Produit créé", newProduct));
     }
 
 

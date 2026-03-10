@@ -44,8 +44,11 @@ public class SecurityConfig {
                         .requestMatchers("/produits/**").permitAll()
                         .requestMatchers("/commandes/**").permitAll()
                         .requestMatchers("/ville/**").permitAll()
+                        .requestMatchers("/region/**").permitAll()
+                        .requestMatchers("/pays/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/user/**").permitAll()
+                        .requestMatchers("/uploads/**").permitAll() // <-- AJOUTE CETTE LIGNE
                         .requestMatchers("/depots/**").permitAll()
                         .anyRequest().authenticated()
                 );

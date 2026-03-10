@@ -10,7 +10,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
-
 @Entity
 @Table(name = "Ville")
 @Data
@@ -25,24 +24,20 @@ public class Ville {
 
     private String label;
 
-    private int code_postal;
+    private String code_postal; // Changé en String si vous avez des codes postaux avec 0 au début (ex: 0123)
+
 
     @ManyToOne
     @JoinColumn(name = "region_id")
     @JsonBackReference("ville-region")
     private Region region;
 
-
-
-
-    @OneToMany(cascade = CascadeType.ALL , mappedBy = "ville" , orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ville", orphanRemoval = true)
     @JsonIgnoreProperties("ville")
     private List<User> users;
 
-
     @OneToMany(mappedBy = "ville")
-    @JsonIgnoreProperties("ville") // Très important pour couper la boucle Ville -> Depot -> Ville
+    @JsonIgnoreProperties("ville")
     private List<Depot> depots;
 
 }
-
