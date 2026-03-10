@@ -44,6 +44,7 @@ public class SecurityConfig {
                         .requestMatchers("/produits/**").permitAll()
                         .requestMatchers("/commandes/**").permitAll()
                         .requestMatchers("/ville/**").permitAll()
+                        .requestMatchers("/evenements/**").permitAll()
                         .requestMatchers("/region/**").permitAll()
                         .requestMatchers("/pays/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
